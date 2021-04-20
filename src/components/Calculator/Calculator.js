@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ee from "../../eventEmitter/eventEmitter";
+import store from "../../store/Store";
 import ControlPanel from "../ControlPanel/ControlPanel";
 import Digits from "../Digits/Digits";
 import Display from "../Display/Display";
@@ -7,10 +9,15 @@ import Operators from "../Operators/Operators";
 import "./Calculator.css";
 
 class Calculator extends Component {
+  constructor(props) {
+    super(props);
+
+    ee.addListener("displayUpdate", () => this.forceUpdate());
+  }
   render() {
     return (
       <main className="react-calculator">
-        <Display />
+        <Display text={store.curExpression} />
         <ControlPanel />
         <Digits />
         <Operators />
